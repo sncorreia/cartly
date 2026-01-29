@@ -1,4 +1,4 @@
 import { createCartContext } from "cartly";
-import type { TcgSet } from "../types/types";
+import type { CartItem } from "../types/types";
 
-export const { CartProvider, useCart } = createCartContext<TcgSet>();
+export const { CartProvider, useCart } = createCartContext<CartItem>();
