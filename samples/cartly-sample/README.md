@@ -1,73 +1,114 @@
-# React + TypeScript + Vite
+# Cartly Sample App 🛒
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a **sample React application** demonstrating how to use **cartly**, a lightweight, type-safe React Cart Context library built with modern hooks.
 
-Currently, two official plugins are available:
+The goal of this sample is to show **real-world usage** of `cartly` with:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React + TypeScript
+- Vite
+- Material UI
+- A Navbar + Cart Drawer UX pattern
+- Placeholder product data (no API required)
 
-## React Compiler
+> ⚠️ This sample app is **not published to npm**.  
+> It exists only as a usage example for the `cartly` library.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ What This Sample Demonstrates
 
-## Expanding the ESLint configuration
+- Creating a **typed cart context** using `createCartContext<T>()`
+- Exporting a **single CartProvider + useCart hook** for the entire app
+- Integrating cart state with a **Material UI Navbar + Drawer**
+- Adding items to the cart from a product grid
+- Updating quantities and removing items
+- Persisting cart state using `localStorage`
+- Clean separation between **UI state** (Drawer open/close) and **cart state**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🧱 Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **React 18**
+- **TypeScript**
+- **Vite**
+- **Material UI (MUI)**
+- **cartly**
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🚀 Getting Started
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+From the repository root:
+
+```bash
+cd samples/cartly-sample
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The app will be available at:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+http://localhost:5173
 ```
+
+## 🧩 Cart Context Setup and Type Definition
+
+The cart context is created once and reused throughout the app. Here, it is set up inside src/cart/cart.ts.
+
+```TypeScript
+import { createCartContext } from "cartly";
+import type { CartItem } from "../types/types";
+
+export const { CartProvider, useCart } = createCartContext<CartItem>();
+
+```
+
+This file is then imported wherever the cart is needed.
+
+You need to define your Type before creating the cart context.
+
+## 🏗️ Application Structure
+
+```Plain Text
+src/
+├── cart/
+│   └── cart.ts           # createCartContext<Product>()
+├── components/
+│   ├── Navbar.tsx
+│   ├── CartDrawer.tsx
+│   ├── ItemCard.tsx
+│   └── ItemList.tsx
+├── types/
+│   └── types.ts          # Types definition
+├── App.tsx
+└── main.tsx              # Wrap your <App> component
+```
+
+## 🧭 Material UI Pattern Used
+
+This sample follows the recommended MUI pattern:
+
+- Navbar owns Drawer state
+- Drawer is a controlled component (open, onClose)
+- Cart state comes from useCart()
+
+## 🧪 Placeholder Data
+
+This sample uses static placeholder data instead of an API to keep the example simple and focused on cart behavior.
+You can find it in:
+
+```Plain Text
+src/components/ItemList.tsx
+```
+
+## 🔍 Why This Sample Exists
+
+- Show best practices for integrating cartly
+- Provide a copy‑paste‑friendly reference
+- Demonstrate a realistic UI flow
+- Avoid overloading the main library README
+
+## 📦 About cartly
+
+If you’re looking for the library itself, see the main README at the root of the repository:
+👉 https://github.com/sncorreia/cartly
+
+## 📝 License
+
+MIT © Sérgio Correia
